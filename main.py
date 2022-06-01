@@ -28,7 +28,7 @@ if not correctDir:
 	exit()
 
 if not serviceFound:
-	persistence.createService(userData["targetDir"] + "main.py")
+	persistence.createService("main.py")
 
 
 
