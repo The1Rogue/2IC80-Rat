@@ -19,3 +19,7 @@ serviceDesc = "tracks system details"
 ghosts = [("audioProc", "audioProcessor", "provides audio control"),
 	("updater", "softwareUpdater", "keeps software up to date"),
 	("ioControl", "ioControl", "controls generic peripheral devices")]
+
+
+#data for connection
+port = 65432

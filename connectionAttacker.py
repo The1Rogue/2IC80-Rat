@@ -1,9 +1,14 @@
 #Import required to run file
 import socket
+import config
+import regex
 
 #Connection data of victim computer
-HOST = "192.168.56.105"
-PORT = 65432
+ipReg = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}"
+HOST = input("target IPv4 address: ")
+while not re.fullmatch(ipReg, HOST):
+	HOST = input("invalid ip address, try again: ")
+PORT = config.port
 
 #Connects to the victim computer
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

