@@ -1,7 +1,7 @@
 #Import required to run file
 import socket
 import config
-import regex
+import re
 
 #Connection data of victim computer
 ipReg = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}"
