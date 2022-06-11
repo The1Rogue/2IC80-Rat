@@ -5,7 +5,7 @@ import config
 
 
 #Connection data of victim. Port number has to be >4 digits in order to prevent interfering with specific reserved ports
-HOST = socket.gethostbyname(socket.gethostname())
+HOST = os.popen("ip -br a | grep UP | head -1 | awk '{print $3}'").read()[:-4] # a bit hacky, but this works on VM too
 PORT = config.port
 
 #Prints connection data of victim
